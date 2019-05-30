@@ -17,7 +17,7 @@ server.use(cors());
 server.use('/api/auth', authRouter);
 //will display all users (id,username,pw)
 //use  /api/users/:id to delete 
-server.use('/api/users', restricted, usersRouter);
+server.use('/api/users', usersRouter);
 //will display all questions
 //use /api/questions/:id to delete-edit
 server.use('/api/questions', restricted, questionsRouter);
