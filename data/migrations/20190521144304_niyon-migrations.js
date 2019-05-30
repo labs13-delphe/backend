@@ -45,6 +45,7 @@ exports.up = function(knex, Promise) {
 			tbl.text('certs');
 			tbl.text('profile_text');
 			tbl.string('skills', 400);
+			tbl.integer("years_of_exp");
 		});
 };
 
