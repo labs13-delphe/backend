@@ -22,6 +22,7 @@ exports.up = function(knex, Promise) {
         tbl.string('twitter');
         tbl.string('facebook');
         tbl.string('image_url');
+        tbl.string('user_type').defaultTo('expert')
 
     })
   

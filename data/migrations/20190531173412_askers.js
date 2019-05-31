@@ -11,6 +11,7 @@ exports.up = function(knex, Promise) {
         tbl.string('password', 128).notNullable();
         tbl.string('email', 128).notNullable();
         tbl.text('bio');
+        tbl.string('user_type').defaultTo('asker')
 
     })
 };
