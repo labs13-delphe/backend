@@ -21,6 +21,7 @@
             tbl.string('twitter');
             tbl.string('facebook');
             tbl.string('image_url');
+            tbl.string("user_type").defaultTo("expert");
 
         })
 
@@ -32,7 +33,9 @@
             tbl.string('username', 128).notNullable();
             tbl.string('password', 128).notNullable();
             tbl.string('email', 128).notNullable();
-            tbl.text('bio');
+            tbl.text('bio');            
+            tbl.string("user_type").defaultTo("asker");
+
 
         })
 
