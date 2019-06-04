@@ -7,6 +7,7 @@ const authRouter = require('../auth/auth-router');
 const usersRouter = require('../api/users-router');
 const questionsRouter = require('../api/questions-router');
 const profileRouter = require('../api/profile-router');
+const askerRouter = require("./askers-router");
 
 const server = express();
 
@@ -24,6 +25,7 @@ server.use('/api/questions', restricted, questionsRouter);
 //will display all profiles
 server.use('/api/profile', restricted, profileRouter);
 
+server.use("/api/askers", askerRouter);
 server.get('/', (req, res) => {
 	res.send("It's alive!");
 });
