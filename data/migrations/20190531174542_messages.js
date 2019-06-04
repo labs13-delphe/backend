@@ -1,37 +1,40 @@
-
 exports.up = function(knex, Promise) {
-  return knex.schema
-  .createTable('messages', tbl => {
-    tbl.increments();
-    
-    // expert ID foreign key
-    tbl
-        .integer('expert_id')
+    return knex.schema.createTable("messages", tbl => {
+      tbl.increments();
+  
+      // user id foreign key for author
+      tbl
+        .integer("author_id")
         .unsigned()
         .notNullable()
-        .references('id')
-        .inTable('experts')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');
-    
-    // asker ID foreign key
-    tbl
-    .integer('asker_id')
-    .unsigned()
-    .notNullable()
-    .references('id')
-    .inTable('askers')
-    .onDelete('CASCADE')
-    .onUpdate('CASCADE');
-
-    tbl.text('message').notNullable();
-    tbl.timestamps(true, true);
-
-})
-};
-
-exports.down = function(knex, Promise) {
-    return knex.schema
-    .dropTableIfExists('messages')
-
-};
+        .references("id")
+        .inTable("users")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
+  
+      // user id foreign key for answer
+      tbl
+        .integer("answer_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("users")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
+  
+      tbl.text("message").notNullable();
+      tbl.timestamps(true, true);
+      tbl
+        .integer("conversation_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("conversations")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
+    });
+  };
+  
+  exports.down = function(knex, Promise) {
+    return knex.schema.dropTableIfExists("messages");
+  };
