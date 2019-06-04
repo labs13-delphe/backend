@@ -15,13 +15,13 @@ exports.up = function(knex, Promise) {
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
         
-        // expert ID foreign key
+        // user ID foreign key for expert
         tbl
-        .integer('expert_id')
+        .integer('user_id')
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('experts')
+        .inTable('users')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
     

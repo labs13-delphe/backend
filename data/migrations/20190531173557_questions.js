@@ -5,19 +5,18 @@ exports.up = function(knex, Promise) {
     .createTable('questions', tbl => {
         tbl.increments();
         
-        // asker ID foreign key
+        // user ID foreign key for asker
         tbl
-            .integer('asker_id')
+            .integer('user_id')
             .unsigned()
             .notNullable()
             .references('id')
-            .inTable('askers')
+            .inTable('users')
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
             
         tbl.string('title', 128);
         tbl.text('question').notNullable();
-        tbl.string('question_topic').notNullable();
         tbl.string('date', 128);
         tbl.timestamps(true, true);
     })
