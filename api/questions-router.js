@@ -1,75 +1,115 @@
-const router = require('express').Router();
+const router = require("express").Router();
 
-const Questions = require('../api/questions-model');
+const Questions = require("../api/questions-model");
 
-// restricted route /api/questions
-router.post('/', async (req, res) => {
-	try {
-		const question = await Questions.add(req.body);
-		res.status(201).json(question);
-	} catch (error) {
-		res
-			.status(500)
-			.json({ error: 'An error trying to add the question to the database.' });
-	}
+// GET ALL QUESTIONS
+
+router.get("/", (req, res) => {
+  Questions.find()
+    .then(questions => {
+      res.status(200).json(questions);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The questions could not be retrieved." });
+    });
 });
 
-//GET ALL QUESTIONS WORKS
-router.get('/', async (req, res) => {
-	try {
-		const allQuestions = await Questions.find();
-		res.status(200).json(allQuestions);
-	} catch (err) {
-		res.status(500).json(err);
-	}
+// GET QUESTION BY ID
+
+router.get("/:id", (req, res) => {
+  const questionId = req.params.id;
+  Questions.findById(questionId)
+    .then(question => {
+      // if a question with an ID field exists (since an empty answer array was being returned even if 'question' didn't exist)
+      if (question.id) {
+        res.status(200).json(question);
+      } else {
+        res
+          .status(404)
+          .json({ error: "Whoops. This question could not be found." });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: "Uh oh. This question's information could not be retrieved."
+      });
+    });
 });
 
-//GET QUESTION BY ID WORKS
-router.get('/:id', async (req, res) => {
-	try {
-		const userQuestions = await Questions.findByUser(req.params.id);
-		if (userQuestions.length > 0) {
-			res.status(200).json(userQuestions);
-		} else {
-			res.status(404).json({ error: 'user id not found' });
-		}
-	} catch (error) {
-		res.status(500).json({
-			error: 'An error occuried while trying to access the database.'
-		});
-	}
+// POST QUESTION
+
+router.post("/", (req, res) => {
+  const question = req.body;
+  if (!question || !question.user_id || !question.title || !question.question) {
+    res.status(400).json({
+      error:
+        "Whoops! You must submit a question with a user_id, title, and question field."
+    });
+  } else {
+    Questions.add(question, "id")
+      .then(question => {
+        res.status(200).json(question);
+      })
+      .catch(err => {
+        res.status(500).json({
+          error:
+            "Uh oh. There was an error while posting the question to the database."
+        });
+      });
+  }
 });
 
-// EDIT QUESTION WORKS 
-router.put('/:id', async (req, res) => {
-	try {
-		const updateQuestion = await Questions.update(req.body);
-		if (updateQuestion) {
-			res.status(200).json(updateQuestion);
-		} else {
-			res.status(404).json({ error: 'Question id not found' });
-		}
-	} catch (error) {
-		res.status(500).json({
-			error: error.message
-		});
-	}
+// UPDATE QUESTION
+
+router.put("/:id", (req, res) => {
+  const question = req.body;
+  const questionId = req.params.id;
+
+  if (!question || !question.user_id || !question.title || !question.question) {
+    res.status(400).json({
+      error:
+        "Whoops! You must submit a question with a user_id, title, and question field."
+    });
+  } else {
+    Questions.update(questionId, question)
+      .then(count => {
+        if (count > 0) {
+          res.status(200).json({
+            message: `${count} ${count > 1 ? "questions" : "question"} updated!`
+          });
+        } else {
+          res.status(404).json({ error: "This question could not be found." });
+        }
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: "There was an error while updating the question." });
+      });
+  }
 });
 
-//DELETE WORKS
-router.delete('/:id', async (req, res) => {
-	try {
-		const removed = await Questions.remove(req.params.id);
-		if (removed) {
-			res.status(204).json({ success: 'question removed' });
-		} else {
-			res
-				.status(404)
-				.json({ message: 'The question with the specified ID does not exist.' });
-		}
-	} catch (err) {
-		res.status(500).json(err);
-	}
+// DELETE QUESTION
+
+router.delete("/:id", (req, res) => {
+  const questionId = req.params.id;
+  Questions.remove(questionId)
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: `${count} ${count > 1 ? "questions" : "question"} deleted!`
+        });
+      } else {
+        res
+          .status(404)
+          .json({ error: "Whoops. This question could not be found." });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: "Uh oh. There was an error while deleting the question."
+      });
+    });
 });
 
 module.exports = router;

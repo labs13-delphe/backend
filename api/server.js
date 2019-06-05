@@ -21,7 +21,11 @@ server.use("/api/auth", authRouter);
 server.use("/api/users", usersRouter);
 //will display all questions
 //use /api/questions/:id to delete-edit
+<<<<<<< HEAD
 server.use("/api/questions", restricted, questionsRouter);
+=======
+server.use('/api/questions', questionsRouter);
+>>>>>>> d1b8a6b545248d7565e855059af8410154416fe7
 //will display all profiles
 server.use("/api/profile", restricted, profileRouter);
 
