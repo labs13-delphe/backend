@@ -10,6 +10,7 @@ exports.up = function(knex, Promise) {
     tbl.text("bio");
     tbl.string("image_url");
     tbl.string("user_type").defaultTo("asker");
+    tbl.integer("hourly_rate").unsigned();
   });
 };
 
