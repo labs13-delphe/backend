@@ -8,7 +8,8 @@ module.exports = {
   findById,
   update,
   findExpert,
-  addExpert
+  addExpert,
+  updateExpert
 };
 
 async function add(user) {
@@ -65,4 +66,10 @@ function addExpert(expert) {
   return db("expert_profile")
     .insert(expert)
     .then(ids => ({ id: ids[0] }));
+}
+
+function updateExpert(id, expert) {
+  return db("expert_profile")
+    .where({ id })
+    .update(expert);
 }
