@@ -10,6 +10,7 @@ const restricted = require("../auth/restricted-middleware.js");
 const authRouter = require("../auth/auth-router");
 const usersRouter = require("../api/users-router");
 const questionsRouter = require("../api/questions-router");
+const answersRouter = require("./answers-router.js");
 
 
 // Server
@@ -22,6 +23,7 @@ server.use(cors());
 server.use("/api/auth", authRouter);
 server.use("/api/users", usersRouter);
 server.use('/api/questions', questionsRouter);
+server.use("api/answers", answersRouter);
 
 
 server.get("/", (req, res) => {
