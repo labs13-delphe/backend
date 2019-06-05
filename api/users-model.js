@@ -6,6 +6,7 @@ module.exports = {
   find,
   findBy,
   findById,
+  findUserQuestions,
   update,
   findExpert,
   addExpert,
@@ -45,6 +46,30 @@ async function findById(id) {
     .leftJoin("expert_profile", "users.id", "expert_profile.user_id")
     .where({ user_id: Number(id) })
     .first();
+}
+
+async function findUserQuestions(id) {
+  const user = await db("users")
+    .select("users.id", "users.username", "users.email", "users.user_type")
+    .where({ "users.id": Number(id) })
+    .first();
+
+  const questions = await db("questions")
+    .join("users", "users.id", "=", "questions.user_id")
+    .where({ "questions.user_id": Number(id) })
+    .select("questions.id", "questions.title", "questions.question");
+
+  const answers = await db("answers")
+    .join("questions", "questions.id", "=", "answers.question_id")
+    .where({ "questions.user_id": Number(id) })
+    .select(
+      "answers.id",
+      "answers.question_id",
+      "answers.user_id",
+      "answers.answer"
+    );
+
+  return { ...user, questions: [...questions], answers: [...answers] };
 }
 
 function update(id, changes) {

@@ -21,6 +21,26 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/:id/questions", (req, res) => {
+  const id = req.params.id;
+  Users.findUserQuestions(id)
+    .then(user => {
+      // if a user with an ID field exists
+      if (user.id) {
+        res.status(200).json(user);
+      } else {
+        res
+          .status(404)
+          .json({ error: "Whoops. This user could not be found." });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: "Uh oh. This user's information could not be retrieved."
+      });
+    });
+});
+
 router.delete("/:id", async (req, res) => {
   try {
     const removed = await Users.remove(req.params.id);
