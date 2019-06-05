@@ -5,34 +5,6 @@ exports.seed = function(knex, Promise) {
       // Inserts seed entries
       return knex("expert_profile").insert([
         {
-          user_id: 1,
-          hourly_rate: 40,
-          twitter: "@personalcomputer",
-          linkedin: "linkedin.com/personalcomputer",
-          facebook: "facebook.com/cool"
-        },
-        {
-          user_id: 2,
-          hourly_rate: 20,
-          twitter: "@cuterealtor",
-          linkedin: "linkedin.com/professionalbabe",
-          facebook: "facebook.com/cutecoder"
-        },
-        {
-          user_id: 3,
-          hourly_rate: 4000,
-          twitter: "@BillGatesDuh",
-          linkedin: "linkedin.com/bill4thawin",
-          facebook: "facebook.com/applesux"
-        },
-        {
-          user_id: 4,
-          hourly_rate: 4500,
-          twitter: "@BetterThanBill",
-          linkedin: "linkedin.com/professionalbabe",
-          facebook: "facebook.com/windowssux"
-        },
-        {
           user_id: 5,
           hourly_rate: 40,
           twitter: "@Jenny",
