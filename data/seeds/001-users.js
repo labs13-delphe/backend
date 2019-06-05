@@ -13,9 +13,10 @@ exports.seed = function(knex, Promise) {
           username: "janedoe",
           password: bcrypt.hashSync("janedoe", 10), // rounds must match the Registration password hash
           email: "jane@company.com",
-          bio: "I'm a primary school counselor with a passion for advancing our youth -- especially those who are under-served. I'm hoping to start an after-school program students interested in STEM! Looking for any resources or leads to make this possible!",
-          user_type: "asker"
-          
+          bio:
+            "I'm a primary school counselor with a passion for advancing our youth -- especially those who are under-served. I'm hoping to start an after-school program students interested in STEM! Looking for any resources or leads to make this possible!",
+          user_type: "asker",
+          hourly_rate: null
         },
         {
           first_name: "John",
@@ -23,9 +24,10 @@ exports.seed = function(knex, Promise) {
           username: "johndoe",
           password: bcrypt.hashSync("johndoe", 10),
           email: "john@company.com",
-          bio: "I'm a stay-at-home dad with 4 kids who wants to improve my domestic skills! Any professional home-makers out there can give me a hand? ",
-          user_type: "asker"
-          
+          bio:
+            "I'm a stay-at-home dad with 4 kids who wants to improve my domestic skills! Any professional home-makers out there can give me a hand? ",
+          user_type: "asker",
+          hourly_rate: null
         },
         {
           first_name: "Bill",
@@ -33,9 +35,10 @@ exports.seed = function(knex, Promise) {
           username: "billgates",
           password: bcrypt.hashSync("billgates", 10),
           email: "bill@company.com",
-          bio: "I just graduated college and want to improve my credit score and financial habits. I'm deciding between pursuing a master's in education or volunteering for a year. How can I become more financially independent?",
-          user_type: "asker"
-          
+          bio:
+            "I just graduated college and want to improve my credit score and financial habits. I'm deciding between pursuing a master's in education or volunteering for a year. How can I become more financially independent?",
+          user_type: "asker",
+          hourly_rate: null
         },
         {
           first_name: "Steve",
@@ -43,9 +46,10 @@ exports.seed = function(knex, Promise) {
           username: "stevejobs",
           password: bcrypt.hashSync("stevejobs", 10),
           email: "steve@company.com",
-          bio: "I'm a young professional in San Francisco. The housing crisis and real and affordable places are small and not so private. I'm really looking to move into my own place soon but don't know where to start.",
-          user_type: "asker"
-
+          bio:
+            "I'm a young professional in San Francisco. The housing crisis and real and affordable places are small and not so private. I'm really looking to move into my own place soon but don't know where to start.",
+          user_type: "asker",
+          hourly_rate: null
         },
         {
           first_name: "Jenny",
@@ -54,7 +58,8 @@ exports.seed = function(knex, Promise) {
           password: bcrypt.hashSync("jennyhen", 10), // rounds must match the Registration password hash
           email: "yo@yo.com",
           bio: "here to teach y'all!",
-          user_type: "expert"
+          user_type: "expert",
+          hourly_rate: 14
         },
         {
           first_name: "Lenny",
@@ -63,7 +68,8 @@ exports.seed = function(knex, Promise) {
           password: bcrypt.hashSync("lennyben", 10),
           email: "yo@yo.com",
           bio: "here to teach y'all!",
-          user_type: "expert"
+          user_type: "expert",
+          hourly_rate: 16
         },
         {
           first_name: "Denny",
@@ -72,7 +78,8 @@ exports.seed = function(knex, Promise) {
           password: bcrypt.hashSync("dennyken", 10),
           email: "yo@yo.com",
           bio: "here to teach y'all!",
-          user_type: "expert"
+          user_type: "expert",
+          hourly_rate: 13
         }
       ]);
     });
