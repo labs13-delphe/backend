@@ -123,7 +123,7 @@ router.put("/:id/expert", (req, res) => {
   const id = req.params.id;
   Users.updateExpert(id, expert)
     .then(expert => {
-      res.status(200).json(expert);
+      res.status(200).json({ message: "successfully updated profile" });
     })
     .catch(error => {
       res.status(500).json({ error: "could not update the expert profile" });
