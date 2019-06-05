@@ -8,8 +8,7 @@ module.exports = {
   findById,
   update,
   findExpert,
-  addExpert,
-  updateExpert
+  addExpert
 };
 
 async function add(user) {
@@ -39,11 +38,9 @@ async function findBy(filter) {
 }
 
 async function findById(id) {
-  return db
+  return db("users")
     .select("*")
-    .from("users")
-    .leftJoin("expert_profile", "users.id", "expert_profile.user_id")
-    .where({ user_id: Number(id) })
+    .where({ id })
     .first();
 }
 
@@ -66,10 +63,4 @@ function addExpert(expert) {
   return db("expert_profile")
     .insert(expert)
     .then(ids => ({ id: ids[0] }));
-}
-
-function updateExpert(id, expert) {
-  return db("expert_profile")
-    .where({ id })
-    .update(expert);
 }
