@@ -23,7 +23,7 @@ server.use(cors());
 server.use("/api/auth", authRouter);
 server.use("/api/users", usersRouter);
 server.use('/api/questions', questionsRouter);
-server.use("api/answers", answersRouter);
+server.use("/api/answers", answersRouter);
 
 
 server.get("/", (req, res) => {
