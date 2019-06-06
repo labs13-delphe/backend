@@ -1,6 +1,6 @@
 exports.seed = function(knex, Promise) {
   return knex("question_topics")
-    .truncate()
+    // .truncate()
     .then(function() {
       // Inserts seed entries
       return knex("question_topics").insert([
