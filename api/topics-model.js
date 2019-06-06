@@ -1,21 +1,31 @@
 const db = require("../data/dbConfig");
 
 module.exports = {
+  find,
   findBy,
   addQuestionTopic,
   addExpertTopic
 };
 
-function findBy(topic) {
-    return db("topics").where(topic).select("id").first();
+function find() {
+  return db("topics");
+}
 
+function findBy(topic) {
+  return db("topics")
+    .where(topic)
+    .select("id")
+    .first();
 }
 
 function addQuestionTopic(record) {
-    res.send("hello question topics")
+  return db("question_topics")
+    .insert(record, "id")
+    .then(ids => ({ id: ids[0] }));
 }
 
 function addExpertTopic(record) {
-    res.send("hello expert topics")
-
+  return db("expert_topics")
+    .insert(record, "id")
+    .then(ids => ({ id: ids[0] }));
 }
