@@ -3,7 +3,6 @@ const db = require("../data/dbConfig");
 module.exports = {
   find,
   findById,
-  findUserQuestions, // should be on user route
   add,
   remove,
   update
@@ -12,39 +11,6 @@ module.exports = {
 // Find all questions
 async function find() {
   return db("questions");
-}
-
-// ========= MOVE TO USER ROUTE ==========
-async function findUserQuestions(user_id) {
-  // return db('questions').where({user_id});
-
-  const user = await db("users")
-    .select("*")
-    .where({ "users.id": Number(user_id) })
-    .first();
-
-  const questions = await db("questions")
-    .join("users", "users.id", "=", "questions.user_id")
-    .where({ "questions.user_id": Number(user_id) })
-    .select(
-      "questions.id",
-      "questions.title",
-      "questions.question",
-      "questions.date",
-      "questions.created_at"
-    );
-
-  const answers = await db("answers")
-    .join("questions", "questions.id", "=", "answers.question_id")
-    .where({ "questions.user_id": Number(user_id) })
-    .select(
-      "answers.id",
-      "answers.question_id",
-      "answers.expert_id",
-      "answers.answer"
-    );
-
-  return { ...user, questions: [...questions], answers: [...answers] };
 }
 
 // Find single question by ID
