@@ -31,6 +31,7 @@ router.post('/login', async (req, res) => {
 			res.status(200).json({
 				message: `Welcome ${user.username}!`,
 				id: user.id,
+				user,
 				token: token
 			});
 		} else {
