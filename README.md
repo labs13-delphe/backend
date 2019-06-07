@@ -6,7 +6,7 @@
 
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+#### 1️⃣ Backend delpoyed at https://delphe-backend.herokuapp.com <br>
 
 ## 1️⃣ Getting started
 
@@ -19,37 +19,58 @@ To get the server running locally:
 - **yarn server** to start the local server
 - **yarn test** to start server using testing environment
 
-### Backend framework goes here
+### We deployed our backend using Node and Express
 
-🚫 Why did you choose this framework?
-
--    Point One
--    Point Two
--    Point Three
--    Point Four
+-    It allows us to build a relational database using knex and sqlite.
+-    It allows us to create out own middleware wherever neccessary.
+-    It allows for easy integration with our React app.
+-    It allows us to create verry custom endpoints to call on from out React app.
 
 ## 2️⃣ Endpoints
 
 🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
 
-#### Organization Routes
+#### Answers Routes
 
 | Method | Endpoint                | Access Control | Description                                  |
 | ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+| GET    | `/api/answers         ` | all users      | Returns all of the answers that exist.       |
+| POST   | `/api/answers         ` | experts        | posts to the answer table                    |
+| PUT    | `/api/answers/:id     ` | experts        | edits existing answer .                      |
+| DELETE | `/api/delete/:id      ` | owners         | Delete an answer.                            |
 
-#### User Routes
+#### Questions Routes
 
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+| GET    | `/api/questions`        | all users           | Returns info for the logged in user.               |
+| GET    | `/api/questions/:id`    | owners, supervisors | Returns all users for an organization.             |
+| POST   | `/api/questions` .      | none                | Creates a new user as owner of a new organization. |
+| PUT    | `/api/questions/:id     | owners, supervisors |                                                    |
+| DELETE | `/api/questions/:id`    | owners, supervisors |                                                    |
+
+
+#### Topics Routes
+
+| Method | Endpoint                | Access Control | Description                                  |
+| ------ | ----------------------- | -------------- | -------------------------------------------- |
+| GET    | `/api/topics          ` | all users      | Returns the information for an organization. |
+| POST   | `/api/topics`           | owners         | Modify an existing organization.             |
+| POST   | `/api/topics/question`  | owners         | Delete an organization.                      |
+| POST   | `/api/topics/expert`    | owners         | Delete an organization.                      |
+
+#### User Routes
+
+| Method | Endpoint                 | Access Control      | Description                                        |
+| ------ | -----------------------  | ------------------- | -------------------------------------------------- |
+| GET    | `/api/users    `         | all users           | Returns info for the logged in user.               |
+| GET    | `/api/users/:id          | owners, supervisors | Returns all users for an organization.             |
+| GET    | `/api/users/:id/questions| owners, supervisors | Returns info for a single user.                    |
+| DELETE | `/api/users/:id `        | none                | Creates a new user as owner of a new organization. |
+| POST   | `/api/users              | owners, supervisors |                                                    |
+| PUT    | `/api/users/:id          | owners, supervisors |                                                    |
+| DELETE | `/api/users/:id          | owners, supervisors |                                                    |
+
 
 # Data Model
 
