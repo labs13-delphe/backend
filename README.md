@@ -12,7 +12,6 @@
 
 To get the server running locally:
 
-🚫 adjust these scripts to match your project
 
 - Clone this repo
 - **yarn install** to install all required dependencies
@@ -21,14 +20,13 @@ To get the server running locally:
 
 ### We deployed our backend using Node and Express
 
--    It allows us to build a relational database using knex and sqlite.
--    It allows us to create out own middleware wherever neccessary.
--    It allows for easy integration with our React app.
--    It allows us to create verry custom endpoints to call on from out React app.
+-   allows us to build a relational database using knex and sqlite.
+-   allows us to create out own middleware wherever neccessary.
+-   allows for easy integration with our React app.
+-   allows us to create verry custom endpoints to call on from out React app.
 
 ## 2️⃣ Endpoints
 
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
 
 #### Answers Routes
 
@@ -37,78 +35,105 @@ To get the server running locally:
 | GET    | `/api/answers         ` | all users      | Returns all of the answers that exist.       |
 | POST   | `/api/answers         ` | experts        | posts to the answer table                    |
 | PUT    | `/api/answers/:id     ` | experts        | edits existing answer .                      |
-| DELETE | `/api/delete/:id      ` | owners         | Delete an answer.                            |
+| DELETE | `/api/delete/:id      ` | experts        | Delete an answer.                            |
 
 #### Questions Routes
 
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/api/questions`        | all users           | Returns info for the logged in user.               |
-| GET    | `/api/questions/:id`    | owners, supervisors | Returns all users for an organization.             |
-| POST   | `/api/questions` .      | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/api/questions/:id     | owners, supervisors |                                                    |
-| DELETE | `/api/questions/:id`    | owners, supervisors |                                                    |
+| GET    | `/api/questions`        | all users           | Returns all of the question data that exists       |
+| GET    | `/api/questions/:id`    | user                | Returns all question data for the user             |
+| POST   | `/api/questions` .      | user                | Posts a new question to the db                     |
+| PUT    | `/api/questions/:id     | owners of question  | user can edit the question                         |
+| DELETE | `/api/questions/:id`    | owners of question  | user can delete the question                       |
 
 
 #### Topics Routes
 
 | Method | Endpoint                | Access Control | Description                                  |
 | ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/api/topics          ` | all users      | Returns the information for an organization. |
-| POST   | `/api/topics`           | owners         | Modify an existing organization.             |
-| POST   | `/api/topics/question`  | owners         | Delete an organization.                      |
-| POST   | `/api/topics/expert`    | owners         | Delete an organization.                      |
+| GET    | `/api/topics          ` | all users      | Returns all of the topics                    |
+| POST   | `/api/topics`           | all users      | Posts a new topic                            |
+| POST   | `/api/topics/question`  | owners         | gets topics by question                      |
+| POST   | `/api/topics/expert`    | owners         | gets topics by expert                        |
 
 #### User Routes
 
 | Method | Endpoint                 | Access Control      | Description                                        |
 | ------ | -----------------------  | ------------------- | -------------------------------------------------- |
-| GET    | `/api/users    `         | all users           | Returns info for the logged in user.               |
-| GET    | `/api/users/:id          | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/api/users/:id/questions| owners, supervisors | Returns info for a single user.                    |
-| DELETE | `/api/users/:id `        | none                | Creates a new user as owner of a new organization. |
-| POST   | `/api/users              | owners, supervisors |                                                    |
-| PUT    | `/api/users/:id          | owners, supervisors |                                                    |
-| DELETE | `/api/users/:id          | owners, supervisors |                                                    |
+| GET    | `/api/users    `         | all users           | returns all user info                              |
+| GET    | `/api/users/:id          | all users           | returns user info by id                            |
+| GET    | `/api/users/:id/questions| owners, supervisors | returns questions by user id                       |
+| DELETE | `/api/users/:id `        | none                | delete a user by id                                |
+| POST   | `/api/users              | user                | creates a new user                                 |
+| PUT    | `/api/users/:id          | user                | edits user info                                    |
+| DELETE | `/api/users/:id          | user                | delete user info                                   |
 
 
 # Data Model
 
-🚫This is just an example. Replace this with your data model
 
-#### 2️⃣ ORGANIZATIONS
 
----
-
-```
-{
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
-}
-```
-
-#### USERS
+#### 2️⃣ Answers
 
 ---
 
 ```
 {
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
-}
+    "id": 1,
+    "question_id": 1,
+    "user_id": 5,
+    "answer": "Definitely check to see if there are any MESA (Mathematics, Engineering, Science, Achievement) programs in your area. They have a lot of resources and volunteers who come to schools for this purpose!",
+    "created_at": "2019-06-05 23:18:31",
+    "updated_at": "2019-06-05 23:18:31"
+  }
+```
+
+#### Questions
+
+---
+
+```
+
+  {
+    "id": 1,
+    "user_id": 1,
+    "title": "After-school STEM Program",
+    "question": "What are some cool online resources for 3rd graders interested in STEM?",
+    "date": "June 3, 2019",
+    "created_at": "2019-06-05 23:18:31",
+    "updated_at": "2019-06-05 23:18:31"
+  }
+```
+
+#### 2️⃣ Topics
+
+---
+
+```
+{
+    "id": 1,
+    "topic": "Physics"
+  }
+```
+
+#### Users
+
+---
+
+```
+{
+    "id": 1,
+    "first_name": "Jane",
+    "last_name": "Doe",
+    "username": "janedoe",
+    "password": "$2a$10$gNYRCdqdFBRq.9FNUwl6ye.TYlmPm5HZJWDon4bxjJvSzzhka7IKS",
+    "email": "jane@company.com",
+    "bio": "I'm a primary school counselor with a passion for advancing our youth -- especially those who are under-served. I'm hoping to start an after-school program students interested in STEM! Looking for any resources or leads to make this possible!",
+    "image_url": null,
+    "user_type": "asker",
+    "hourly_rate": null
+  }
 ```
 
 ## 2️⃣ Actions
