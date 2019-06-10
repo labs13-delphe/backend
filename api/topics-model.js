@@ -3,6 +3,7 @@ const db = require("../data/dbConfig");
 module.exports = {
   find,
   findBy,
+  findQuestionTopics,
   addQuestionTopic,
   addExpertTopic
 };
@@ -16,6 +17,10 @@ function findBy(topic) {
     .where(topic)
     .select("id")
     .first();
+}
+
+function findQuestionTopics() {
+  return db("question_topics");
 }
 
 function addQuestionTopic(record) {
