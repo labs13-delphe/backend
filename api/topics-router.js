@@ -12,6 +12,18 @@ router.get("/", (req, res) => {
     });
 });
 
+
+// Get All Question Topics
+router.get("/question", (req, res) => {
+  Topics.findQuestionTopics()
+    .then(topics => {
+      res.status(200).json(topics);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The question topics could not be retrieved." });
+    });
+});
+
 // Find Topic by Name through POST request
 // Think how a user is found through posting to a login route
 router.post("/", (req, res) => {
