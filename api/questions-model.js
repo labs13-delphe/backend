@@ -20,6 +20,7 @@ async function findById(id) {
     .first()
     .select(
       "questions.id",
+      "questions.user_id",
       "questions.title",
       "questions.question",
       "questions.date",
