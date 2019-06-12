@@ -4,7 +4,8 @@ module.exports = {
   find,
   add,
   remove,
-  update
+  update,
+  findUserAnswers
 };
 
 // Find all answers
@@ -32,4 +33,12 @@ function update(id, answer) {
   return db("answers")
     .where({ id: Number(id) })
     .update(answer);
+}
+
+//Find answers by user ID
+async function findUserAnswers(id) {
+  return db("answers")
+  .join('questions', 'answers.question_id', '=', 'questions.id')
+  .where({"answers.user_id": Number(id)})
+  .select()
 }

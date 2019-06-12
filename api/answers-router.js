@@ -12,6 +12,18 @@ router.get("/", (req, res) => {
     });
 });
 
+//Get Ansewers by user
+router.get("/:id", (req, res) => {
+  console.log(req.body)
+  Answers.findUserAnswers(req.params.id)
+    .then(answers => {
+      res.status(200).json(answers);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The answers could not be retrieved." });
+    });
+});
+
 // Post Answer
 router.post("/", (req, res) => {
   const answer = req.body;
