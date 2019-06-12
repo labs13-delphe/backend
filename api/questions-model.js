@@ -5,12 +5,13 @@ module.exports = {
   findById,
   add,
   remove,
-  update
+  update,
+  getQuestionsByTopic
 };
 
 // Find all questions
 async function find() {
-  return db("questions");
+  return db("questions"); 
 }
 
 // Find single question by ID
@@ -58,4 +59,11 @@ function update(id, question) {
   return db("questions")
     .where({ id: Number(id) })
     .update(question);
+}
+
+//Get questions by topic
+function getQuestionsByTopic(topic_id) {
+    return db.raw(
+      `SELECT * FROM question_topics as qt JOIN questions as q ON (qt.question_id == q.id) WHERE qt.topic_id == ${topic_id}`
+    )
 }
