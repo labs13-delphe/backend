@@ -36,6 +36,29 @@ router.get("/:id", (req, res) => {
     });
 });
 
+//GET QUESTION BY TOPIC
+
+router.get("/topic/:id", (req, res) => {
+  const topicId = req.params.id;
+  console.log(topicId)
+  Questions.getQuestionsByTopic(topicId)
+    .then(questions => {
+      // if a question with an ID field exists (since an empty answer array was being returned even if 'question' didn't exist)
+      if (questions) {
+        res.status(200).json(questions);
+      } else {
+        res
+          .status(404)
+          .json({ error: "Whoops. This question could not be found." });
+      }
+    })
+    .catch(({message}) => {
+      res.status(500).json({
+        error: message
+      });
+    });
+});
+
 // POST QUESTION
 
 router.post("/", (req, res) => {
