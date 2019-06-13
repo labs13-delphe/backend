@@ -32,7 +32,13 @@ async function findById(id) {
     .where({ "questions.id": Number(id) })
     .select("answers.id", "answers.user_id", "answers.answer");
 
-  return { ...question, answers: [...answers] };
+  const topics = await db("topics")
+  .join("question_topics", "question_topics.topic_id", "=", "topics.id")
+  .where({ "question_topics.question_id": Number(id) })
+  .select("topics.id", "topics.topic");
+
+
+  return { ...question, answers: [...answers], topics: [...topics] };
 
   // return db("questions")
   // .where({ id: Number(id) })
