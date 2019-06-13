@@ -2,6 +2,10 @@
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
+const dotenv = require("dotenv");
+
+dotenv.config()
+
 
 // Middleware
 const restricted = require("../auth/restricted-middleware.js");
@@ -26,6 +30,9 @@ server.use("/api/users", usersRouter);
 server.use('/api/questions', questionsRouter);
 server.use("/api/answers", answersRouter);
 server.use("/api/topics", topicsRouter);
+
+const configureRoutes = require("./stripe/index")
+configureRoutes(server);
 
 
 server.get("/", (req, res) => {
