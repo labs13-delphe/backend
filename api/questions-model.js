@@ -6,7 +6,8 @@ module.exports = {
   add,
   remove,
   update,
-  getQuestionsByTopic
+  getQuestionsByTopic,
+  getQbyT
 };
 
 // Find all questions
@@ -72,4 +73,13 @@ function getQuestionsByTopic(topic_id) {
     return db.raw(
       `SELECT * FROM question_topics as qt JOIN questions as q ON (qt.question_id == q.id) WHERE qt.topic_id == ${topic_id}`
     )
+}
+
+//GET questions by topic IDs
+function getQbyT(topic_ids) {
+return db("question_topics")
+    .join("questions", "question_topics.id", "=", "questions.id")
+    .join("topics", "topics.id", "=", "question_topics.topic_id")
+    .whereIn("question_topics.topic_id", [...topic_ids])
+    .select()
 }
