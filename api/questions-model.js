@@ -70,9 +70,14 @@ function update(id, question) {
 
 //Get questions by topic
 function getQuestionsByTopic(topic_id) {
-    return db.raw(
-      `SELECT * FROM question_topics as qt JOIN questions as q ON (qt.question_id == q.id) WHERE qt.topic_id == ${topic_id}`
-    )
+    // return db.raw(
+    //   `SELECT * FROM question_topics as qt JOIN questions as q ON (qt.question_id == q.id) WHERE qt.topic_id == ${topic_id}`
+    // )
+
+    return db("questions")
+      .join("question_topics", "question_topics.question_id", "=", "questions.id")
+      .where("question_topics.topic_id", "=", `${topic_id}`)
+      .select()
 }
 
 //GET questions by topic IDs
