@@ -78,6 +78,7 @@ function getQuestionsByTopic(topic_id) {
       .join("question_topics", "question_topics.question_id", "=", "questions.id")
       .where("question_topics.topic_id", "=", `${topic_id}`)
       .select()
+      //
 }
 
 //GET questions by topic IDs
