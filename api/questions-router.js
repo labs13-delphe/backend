@@ -16,8 +16,8 @@ router.get("/", (req, res) => {
 
 //Temporary
 router.get("/questionTopics", (req, res) => {
-  console.log(req.body.topicIds)
-  const topic_ids = req.body.topicIds
+  console.log(req.query)
+  const topic_ids = req.query.topicIds
   console.log(topic_ids)
   Questions.getQbyT(topic_ids)
     .then(questions => {
