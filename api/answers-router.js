@@ -45,6 +45,18 @@ router.get("/users/:id", (req, res) => {
     });
 });
 
+//Get Ansewers by question id
+router.get("/questions/:id", (req, res) => {
+  console.log(req.body)
+  Answers.findByQuestionId(req.params.id)
+    .then(answers => {
+      res.status(200).json(answers);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The answers could not be retrieved." });
+    });
+});
+
 // Post Answer
 router.post("/", (req, res) => {
   const answer = req.body;

@@ -14,6 +14,20 @@ router.get("/", (req, res) => {
     });
 });
 
+//Temporary
+router.get("/questionTopics", (req, res) => {
+  console.log(req.query)
+  const topic_ids = req.query.topicIds
+  console.log(topic_ids)
+  Questions.getQbyT(topic_ids)
+    .then(questions => {
+      res.status(200).json(questions);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The questions could not be retrieved." });
+    });
+});
+
 // GET QUESTION BY ID
 
 router.get("/:id", (req, res) => {

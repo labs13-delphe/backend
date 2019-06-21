@@ -95,4 +95,15 @@ router.post("/expert", (req, res) => {
   }
 });
 
+router.get("/expertTopics/:id", (req, res) => {
+  const id = req.params.id
+  Topics.getExpertTopics(id)
+    .then(topics => {
+      res.status(200).json(topics);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The question topics could not be retrieved." });
+    });
+});
+
 module.exports = router;

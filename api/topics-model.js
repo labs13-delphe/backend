@@ -5,7 +5,8 @@ module.exports = {
   findBy,
   findQuestionTopics,
   addQuestionTopic,
-  addExpertTopic
+  addExpertTopic,
+  getExpertTopics
 };
 
 function find() {
@@ -33,4 +34,12 @@ function addExpertTopic(record) {
   return db("expert_topics")
     .insert(record, "id")
     .then(ids => ({ id: ids[0] }));
+}
+
+//get all topics that the expert is expert in
+
+function getExpertTopics(id) {
+  return db.raw(
+    `select DISTINCT (topics.topic), topics.id from users join expert_topics on users.id=expert_topics.user_id join topics on expert_topics.topic_id=topics.id where users.id=${id}`
+  )
 }
