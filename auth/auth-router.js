@@ -22,11 +22,11 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-	let { username, password } = req.body;
+	let { email } = req.body;
 
 	try {
-		const user = await Users.findBy({ username });
-		if (user && bcrypt.compareSync(password, user.password)) {
+		const user = await Users.findBy({ email });
+		if (user && user.email) {
 			const token = generateToken(user);
 			res.status(200).json({
 				message: `Welcome ${user.username}!`,
@@ -42,6 +42,29 @@ router.post('/login', async (req, res) => {
 		res.status(500).json(err);
 	}
 });
+
+// Original login route:
+// router.post('/login', async (req, res) => {
+// 	let { username, password } = req.body;
+
+// 	try {
+// 		const user = await Users.findBy({ username });
+// 		if (user && bcrypt.compareSync(password, user.password)) {
+// 			const token = generateToken(user);
+// 			res.status(200).json({
+// 				message: `Welcome ${user.username}!`,
+// 				id: user.id,
+// 				user,
+// 				token: token
+// 			});
+// 		} else {
+// 			res.status(401).json({ message: 'Invalid Credentials' });
+// 		}
+// 	}
+// 	catch(err) {
+// 		res.status(500).json(err);
+// 	}
+// });
 
 function generateToken(user) {
 	const payload = {
