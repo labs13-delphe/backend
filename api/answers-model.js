@@ -13,7 +13,10 @@ module.exports = {
 // Find all answers
 async function find() {
   return db("answers");
-  
+}
+
+function findById(id) {
+  return db("answers").where({ id });
 }
 
 // Find answer By ID
