@@ -5,12 +5,14 @@ module.exports = {
   findById,
   add,
   remove,
-  update
+  update,
+  getQuestionsByTopic,
+  getQbyT
 };
 
 // Find all questions
 async function find() {
-  return db("questions");
+  return db("questions"); 
 }
 
 // Find single question by ID
@@ -20,6 +22,7 @@ async function findById(id) {
     .first()
     .select(
       "questions.id",
+      "questions.user_id",
       "questions.title",
       "questions.question",
       "questions.date",
@@ -31,7 +34,13 @@ async function findById(id) {
     .where({ "questions.id": Number(id) })
     .select("answers.id", "answers.user_id", "answers.answer");
 
-  return { ...question, answers: [...answers] };
+  const topics = await db("topics")
+  .join("question_topics", "question_topics.topic_id", "=", "topics.id")
+  .where({ "question_topics.question_id": Number(id) })
+  .select("topics.id", "topics.topic");
+
+
+  return { ...question, answers: [...answers], topics: [...topics] };
 
   // return db("questions")
   // .where({ id: Number(id) })
@@ -57,4 +66,26 @@ function update(id, question) {
   return db("questions")
     .where({ id: Number(id) })
     .update(question);
+}
+
+//Get questions by topic
+function getQuestionsByTopic(topic_id) {
+    // return db.raw(
+    //   `SELECT * FROM question_topics as qt JOIN questions as q ON (qt.question_id == q.id) WHERE qt.topic_id == ${topic_id}`
+    // )
+
+    return db("questions")
+      .join("question_topics", "question_topics.question_id", "=", "questions.id")
+      .where("question_topics.topic_id", "=", `${topic_id}`)
+      .select()
+      //
+}
+
+//GET questions by topic IDs
+function getQbyT(topic_ids) {
+return db("question_topics")
+    .join("questions", "question_topics.id", "=", "questions.id")
+    .join("topics", "topics.id", "=", "question_topics.topic_id")
+    .whereIn("question_topics.topic_id", [...topic_ids])
+    .select()
 }

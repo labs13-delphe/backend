@@ -12,6 +12,51 @@ router.get("/", (req, res) => {
     });
 });
 
+// Get Answer by ID
+router.get("/:id", (req, res) => {
+  const answerId = req.params.id;
+  Answers.findById(answerId)
+    .then(answer => {
+      // if a question with an ID field exists (since an empty answer array was being returned even if 'question' didn't exist)
+      if (answer.id) {
+        res.status(200).json(answer);
+      } else {
+        res
+          .status(404)
+          .json({ error: "Whoops. This answer could not be found." });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: "Uh oh. This answer's information could not be retrieved."
+      });
+    });
+});
+
+//Get Ansewers by user
+router.get("/users/:id", (req, res) => {
+  console.log(req.body)
+  Answers.findUserAnswers(req.params.id)
+    .then(answers => {
+      res.status(200).json(answers);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The answers could not be retrieved." });
+    });
+});
+
+//Get Ansewers by question id
+router.get("/questions/:id", (req, res) => {
+  console.log(req.body)
+  Answers.findByQuestionId(req.params.id)
+    .then(answers => {
+      res.status(200).json(answers);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The answers could not be retrieved." });
+    });
+});
+
 // Post Answer
 router.post("/", (req, res) => {
   const answer = req.body;

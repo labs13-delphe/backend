@@ -6,7 +6,7 @@
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
 		"cors": "^2.8.5",
-		"dotenv": "^7.0.0",
+		"dotenv": "^8.0.0",
 		"express": "^4.16.4",
 		"faker": "^4.1.0",
 		"helmet": "^3.16.0",
@@ -16,7 +16,8 @@
 		"moment": "^2.24.0",
 		"pg": "^7.9.0",
 		"router": "^1.3.3",
-		"sqlite3": "^4.0.8"
+		"sqlite3": "^4.0.8",
+		"stripe": "^7.1.0"
 	},
 	"devDependencies": {
 		"nodemon": "^1.18.11"
@@ -31,5 +32,5 @@
 	},
 	"keywords": [],
 	"author": "Chad Kidd",
-	"license": "ISC"	
+	"license": "ISC"
 }

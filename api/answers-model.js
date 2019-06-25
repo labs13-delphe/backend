@@ -5,7 +5,9 @@ module.exports = {
   findById,
   add,
   remove,
-  update
+  update,
+  findUserAnswers,
+  findByQuestionId
 };
 
 // Find all answers
@@ -15,6 +17,14 @@ async function find() {
 
 function findById(id) {
   return db("answers").where({ id });
+}
+
+// Find answer By ID
+async function findById(id) {
+  return db("answers")
+    .select("*")
+    .where({ id })
+    .first();
 }
 
 // Add new answer
@@ -36,4 +46,21 @@ function update(id, answer) {
   return db("answers")
     .where({ id: Number(id) })
     .update(answer);
+}
+
+//Find answers by user ID
+async function findUserAnswers(id) {
+  return db("answers")
+  .join('questions', 'answers.question_id', '=', 'questions.id')
+  .where({"answers.user_id": Number(id)})
+  .select()
+}
+
+//Find Answers by question Id
+
+function findByQuestionId(id) {
+  return db("answers")
+  .join("users", "answers.user_id", '=', "users.id")
+  .where({"answers.question_id": id})
+  .select()
 }
