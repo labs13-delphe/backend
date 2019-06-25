@@ -34,57 +34,53 @@ router.post("/", (req, res) => {
   }
 });
 
-
 // Update Answer
 router.put("/:id", (req, res) => {
-    const answer = req.body;
-    const answerId = req.params.id;
-  
-    if (!answer || !answer.user_id || !answer.question_id || !answer.answer) {
-      res.status(400).json({
-        error:
-          "Whoops! You must submit a answer with a user_id, question_id, and answer field."
-      });
-    } else {
-      Answers.update(answerId, answer)
-        .then(count => {
-          if (count > 0) {
-            res.status(200).json({
-              message: `${count} ${count > 1 ? "answers" : "answer"} updated!`
-            });
-          } else {
-            res.status(404).json({ error: "This answer could not be found." });
-          }
-        })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: "There was an error while updating the answer." });
-        });
-    }
-  });
-  
-  // Delete Answer
-  
-  router.delete("/:id", (req, res) => {
-    const answerId = req.params.id;
-    Answers.remove(answerId)
+  const answer = req.body;
+  const answerId = req.params.id;
+
+  if (!answer || !answer.user_id || !answer.question_id || !answer.answer) {
+    res.status(400).json({
+      error:
+        "Whoops! You must submit a answer with a user_id, question_id, and answer field."
+    });
+  } else {
+    Answers.update(answerId, answer)
       .then(count => {
-        if (count > 0) {
+        Answers.find().then(answers => {
           res.status(200).json({
-            message: `${count} ${count > 1 ? "answers" : "answer"} deleted!`
+            message: `${count} ${count > 1 ? "answers" : "answer"} updated!`,
+            answers
           });
-        } else {
-          res
-            .status(404)
-            .json({ error: "Whoops. This answer could not be found." });
-        }
-      })
-      .catch(err => {
-        res.status(500).json({
-          error: "Uh oh. There was an error while deleting the answer."
         });
+      })
+      .catch(({ message }) => {
+        res.status(500).json({ error: message });
       });
-  });
+  }
+});
+
+// Delete Answer by
+
+router.delete("/:id", (req, res) => {
+  const answerId = req.params.id;
+  Answers.remove(answerId)
+    .then(count => {
+      if (count > 0) {
+        res.status(200).json({
+          message: `${count} ${count > 1 ? "answers" : "answer"} deleted!`
+        });
+      } else {
+        res
+          .status(404)
+          .json({ error: "Whoops. This answer could not be found." });
+      }
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: "Uh oh. There was an error while deleting the answer."
+      });
+    });
+});
 
 module.exports = router;

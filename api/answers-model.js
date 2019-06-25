@@ -2,6 +2,7 @@ const db = require("../data/dbConfig");
 
 module.exports = {
   find,
+  findById,
   add,
   remove,
   update
@@ -10,7 +11,10 @@ module.exports = {
 // Find all answers
 async function find() {
   return db("answers");
-  
+}
+
+function findById(id) {
+  return db("answers").where({ id });
 }
 
 // Add new answer
