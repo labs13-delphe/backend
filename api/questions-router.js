@@ -14,20 +14,6 @@ router.get("/", (req, res) => {
     });
 });
 
-//Temporary
-router.get("/questionTopics", (req, res) => {
-  console.log(req.body)
-  const topic_ids = req.body.topicIds
-  console.log(topic_ids)
-  Questions.getQbyT(topic_ids)
-    .then(questions => {
-      res.status(200).json(questions);
-    })
-    .catch(err => {
-      res.status(500).json({ error: "The questions could not be retrieved." });
-    });
-});
-
 // GET QUESTION BY ID
 
 router.get("/:id", (req, res) => {
@@ -46,29 +32,6 @@ router.get("/:id", (req, res) => {
     .catch(err => {
       res.status(500).json({
         error: "Uh oh. This question's information could not be retrieved."
-      });
-    });
-});
-
-//GET QUESTION BY TOPIC
-
-router.get("/topic/:id", (req, res) => {
-  const topicId = req.params.id;
-  console.log(topicId)
-  Questions.getQuestionsByTopic(topicId)
-    .then(questions => {
-      // if a question with an ID field exists (since an empty answer array was being returned even if 'question' didn't exist)
-      if (questions) {
-        res.status(200).json(questions);
-      } else {
-        res
-          .status(404)
-          .json({ error: "Whoops. This question could not be found." });
-      }
-    })
-    .catch(({message}) => {
-      res.status(500).json({
-        error: message
       });
     });
 });
@@ -148,5 +111,46 @@ router.delete("/:id", (req, res) => {
       });
     });
 });
+
+
+// ======================================
+// Temporary
+router.get("/questionTopics", (req, res) => {
+  console.log(req.body)
+  const topic_ids = req.body.topicIds
+  console.log(topic_ids)
+  Questions.getQbyT(topic_ids)
+    .then(questions => {
+      res.status(200).json(questions);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The questions could not be retrieved." });
+    });
+});
+
+// GET QUESTION BY TOPIC
+
+router.get("/topic/:id", (req, res) => {
+  const topicId = req.params.id;
+  console.log(topicId)
+  Questions.getQuestionsByTopic(topicId)
+    .then(questions => {
+      // if a question with an ID field exists (since an empty answer array was being returned even if 'question' didn't exist)
+      if (questions) {
+        res.status(200).json(questions);
+      } else {
+        res
+          .status(404)
+          .json({ error: "Whoops. This question could not be found." });
+      }
+    })
+    .catch(({message}) => {
+      res.status(500).json({
+        error: message
+      });
+    });
+});
+
+
 
 module.exports = router;

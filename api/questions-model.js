@@ -11,7 +11,7 @@ module.exports = {
 };
 
 // Find all questions
-async function find() {
+function find() {
   return db("questions"); 
 }
 
@@ -39,12 +39,7 @@ async function findById(id) {
   .where({ "question_topics.question_id": Number(id) })
   .select("topics.id", "topics.topic");
 
-
   return { ...question, answers: [...answers], topics: [...topics] };
-
-  // return db("questions")
-  // .where({ id: Number(id) })
-  // .first();
 }
 
 // Add new question
@@ -67,6 +62,9 @@ function update(id, question) {
     .where({ id: Number(id) })
     .update(question);
 }
+
+
+// ============================= Extra
 
 //Get questions by topic
 function getQuestionsByTopic(topic_id) {

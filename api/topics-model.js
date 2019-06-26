@@ -36,7 +36,9 @@ function addExpertTopic(record) {
     .then(ids => ({ id: ids[0] }));
 }
 
-//get all topics that the expert is expert in
+// ============================= Extra
+
+// Get all topics that the expert is expert in
 
 function getExpertTopics(id) {
   return db.raw(

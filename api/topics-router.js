@@ -95,6 +95,7 @@ router.post("/expert", (req, res) => {
   }
 });
 
+// ===================================
 router.get("/expertTopics/:id", (req, res) => {
   const id = req.params.id
   Topics.getExpertTopics(id)

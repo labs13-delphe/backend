@@ -33,30 +33,6 @@ router.get("/:id", (req, res) => {
     });
 });
 
-//Get Ansewers by user
-router.get("/users/:id", (req, res) => {
-  console.log(req.body)
-  Answers.findUserAnswers(req.params.id)
-    .then(answers => {
-      res.status(200).json(answers);
-    })
-    .catch(err => {
-      res.status(500).json({ error: "The answers could not be retrieved." });
-    });
-});
-
-//Get Ansewers by question id
-router.get("/questions/:id", (req, res) => {
-  console.log(req.body)
-  Answers.findByQuestionId(req.params.id)
-    .then(answers => {
-      res.status(200).json(answers);
-    })
-    .catch(err => {
-      res.status(500).json({ error: "The answers could not be retrieved." });
-    });
-});
-
 // Post Answer
 router.post("/", (req, res) => {
   const answer = req.body;
@@ -105,8 +81,7 @@ router.put("/:id", (req, res) => {
   }
 });
 
-// Delete Answer by
-
+// Delete Answer
 router.delete("/:id", (req, res) => {
   const answerId = req.params.id;
   Answers.remove(answerId)
@@ -127,5 +102,34 @@ router.delete("/:id", (req, res) => {
       });
     });
 });
+
+
+// ===================================
+
+// Get Answers by user
+router.get("/users/:id", (req, res) => {
+  console.log(req.body)
+  Answers.findUserAnswers(req.params.id)
+    .then(answers => {
+      res.status(200).json(answers);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The answers could not be retrieved." });
+    });
+});
+
+// Get Answers by question id
+router.get("/questions/:id", (req, res) => {
+  console.log(req.body)
+  Answers.findByQuestionId(req.params.id)
+    .then(answers => {
+      res.status(200).json(answers);
+    })
+    .catch(err => {
+      res.status(500).json({ error: "The answers could not be retrieved." });
+    });
+});
+
+
 
 module.exports = router;
