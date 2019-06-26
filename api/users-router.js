@@ -1,8 +1,11 @@
+// Packages
 const router = require("express").Router();
 
+// Data
 const Users = require("./users-model.js");
 
-// restricted route /api/users
+// Endpoints
+
 router.get("/", async (req, res) => {
   try {
     const allUsers = await Users.find();
@@ -98,56 +101,5 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
-  try {
-    const removed = await Users.remove(req.params.id);
-    if (removed) {
-      res.status(204).json({ success: "User removed" });
-    } else {
-      res
-        .status(404)
-        .json({ message: "The User with the specified ID does not exist." });
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-//find expert profile by user_id
-
-router.get("/:id/expert", (req, res) => {
-  const user_id = req.params.id;
-  Users.findExpert(user_id)
-    .then(expert => {
-      res.status(200).json(expert);
-    })
-    .catch(error => {
-      res.status(500).json({ error: "Can not get expert profile." });
-    });
-});
-
-//add expert by user_id
-router.post("/:id/expert", (req, res) => {
-  const expert = req.body;
-  Users.addExpert(expert)
-    .then(expert => {
-      res.status(200).json(expert);
-    })
-    .catch(error => {
-      res.status(500).json({ error: "Could not make expert post" });
-    });
-});
-
-router.put("/:id/expert", (req, res) => {
-  const expert = req.body;
-  const id = req.params.id;
-  Users.updateExpert(id, expert)
-    .then(expert => {
-      res.status(200).json({ message: "successfully updated profile" });
-    })
-    .catch(error => {
-      res.status(500).json({ error: "could not update the expert profile" });
-    });
-});
 
 module.exports = router;
