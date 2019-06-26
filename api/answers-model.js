@@ -11,16 +11,13 @@ module.exports = {
 };
 
 // Find all answers
-async function find() {
+function find() {
   return db("answers");
 }
 
-function findById(id) {
-  return db("answers").where({ id });
-}
 
 // Find answer By ID
-async function findById(id) {
+function findById(id) {
   return db("answers")
     .select("*")
     .where({ id })
@@ -47,6 +44,9 @@ function update(id, answer) {
     .where({ id: Number(id) })
     .update(answer);
 }
+
+
+// ================================
 
 //Find answers by user ID
 async function findUserAnswers(id) {

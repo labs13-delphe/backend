@@ -11,7 +11,7 @@ module.exports = {
 };
 
 // Find all questions
-async function find() {
+function find() {
   return db("questions"); 
 }
 
@@ -67,6 +67,9 @@ function update(id, question) {
     .where({ id: Number(id) })
     .update(question);
 }
+
+
+// =================================
 
 //Get questions by topic
 function getQuestionsByTopic(topic_id) {

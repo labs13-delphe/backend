@@ -6,68 +6,83 @@
 
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at https://delphe-backend.herokuapp.com <br>
+#### Backend delpoyed at https://delphe-backend.herokuapp.com <br>
 
-## 1️⃣ Getting started
+## Getting started
 
 To get the server running locally:
 
 
 - Clone this repo
-- **yarn install** to install all required dependencies
-- **yarn server** to start the local server
-- **yarn test** to start server using testing environment
+- `yarn install` to install all required dependencies
+- `yarn server` to start the local server
+- `yarn test` to start server using testing environment
 
 ### We deployed our backend using Node and Express
 
 -   allows us to build a relational database using knex and sqlite.
 -   allows us to create out own middleware wherever neccessary.
 -   allows for easy integration with our React app.
--   allows us to create verry custom endpoints to call on from out React app.
+-   allows us to create modular, RESTful APIs to call on from our React app.
 
 ## 2️⃣ Endpoints
+(_selective access to endpoints is handled on Frontend_)
+- [Authentication Routes](#Authentication-Routes)
+- [User Routes](#User-Routes)
+- [Question Routes](#Question-Routes)
+- [Answer Routes](#Answer-Routes)
+- [Topic Routes](#Topic-Routes)
+
+#### Authentication Routes `/api/auth...`
+| Method | Endpoint | Description  |
+| ------ | ----  | -------------- |
+| POST    | `/register `  | posts a new user to database 
+| POST    | `/login `  | finds registered user in database 
 
 
-#### Answers Routes
+#### User Routes `/api/users...`
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/api/answers         ` | all users      | Returns all of the answers that exist.       |
-| POST   | `/api/answers         ` | experts        | posts to the answer table                    |
-| PUT    | `/api/answers/:id     ` | experts        | edits existing answer .                      |
-| DELETE | `/api/delete/:id      ` | experts        | Delete an answer.                            |
+| Method | Endpoint  | Description  |
+| ------ | ----  | -------------- |
+| GET    | `/ `| returns all users in database |
+| GET    | `/:id`| returns single user info by id |
+| GET    | `/:id/questions`| returns single user info by id with user's questions and answers to questions |
+| DELETE | `/:id`| deletes a single user by id |
+| PUT    | `/:id`| edits single user info by id  |
 
-#### Questions Routes
+#### Question Routes  `/api/questions...`
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/api/questions`        | all users           | Returns all of the question data that exists       |
-| GET    | `/api/questions/:id`    | user                | Returns all question data for the user             |
-| POST   | `/api/questions` .      | user                | Posts a new question to the db                     |
-| PUT    | `/api/questions/:id     | owners of question  | user can edit the question                         |
-| DELETE | `/api/questions/:id`    | owners of question  | user can delete the question                       |
+| Method | Endpoint  | Description  |
+| ------ | ----  | -------------- |
+| GET    | `/`| returns all questions in database | 
+| GET    | `/:id`| returns single question info by id with array of its answers and array of its topics |
+| POST   | `/` | adds a new question to database|
+| DELETE | `/:id` | deletes a single question by id |
+| PUT    | `/:id` | edits a single question by id |
 
 
-#### Topics Routes
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/api/topics          ` | all users      | Returns all of the topics                    |
-| POST   | `/api/topics`           | all users      | Posts a new topic                            |
-| POST   | `/api/topics/question`  | owners         | gets topics by question                      |
-| POST   | `/api/topics/expert`    | owners         | gets topics by expert                        |
+#### Answer Routes `/api/answers...`
 
-#### User Routes
+| Method | Endpoint  | Description  |
+| ------ | ----  | -------------- |
+| GET    | `/`| returns all answers in database | 
+| GET    | `/:id`| returns single answer info by id|
+| POST   | `/` | adds a new answer to database|
+| DELETE | `/:id` | deletes a single answer by id |
+| PUT    | `/:id` | edits a single answer by id |
 
-| Method | Endpoint                 | Access Control      | Description                                        |
-| ------ | -----------------------  | ------------------- | -------------------------------------------------- |
-| GET    | `/api/users    `         | all users           | returns all user info                              |
-| GET    | `/api/users/:id          | all users           | returns user info by id                            |
-| GET    | `/api/users/:id/questions| owners, supervisors | returns questions by user id                       |
-| DELETE | `/api/users/:id `        | none                | delete a user by id                                |
-| POST   | `/api/users              | user                | creates a new user                                 |
-| PUT    | `/api/users/:id          | user                | edits user info                                    |
-| DELETE | `/api/users/:id          | user                | delete user info                                   |
+
+#### Topic Routes `/api/topics...`
+
+| Method | Endpoint  | Description  |
+| ------ | ----  | -------------- |
+| GET    | `/`| returns all topics in database | 
+| GET    | `/question`| returns all records in question_topics database|
+| POST   | `/` | finds a topic in database|
+| POST | `/question` | adds new record to question_topics table|
+
+
 
 
 # Data Model
