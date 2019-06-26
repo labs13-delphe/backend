@@ -33,7 +33,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// Post Answer
+// Post Answer (changed to return the new answer in an array of answers)
 router.post("/", (req, res) => {
   const answer = req.body;
   if (!answer || !answer.user_id || !answer.question_id || !answer.answer) {
@@ -44,7 +44,9 @@ router.post("/", (req, res) => {
   } else {
     Answers.add(answer, "id")
       .then(answer => {
-        res.status(200).json(answer);
+        Answers.find().then(answers => {
+          res.status(200).json({ message: `posted new answer`, answers });
+        });
       })
       .catch(err => {
         res.status(500).json({
@@ -103,12 +105,11 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-
 // ===================================
 
 // Get Answers by user
 router.get("/users/:id", (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   Answers.findUserAnswers(req.params.id)
     .then(answers => {
       res.status(200).json(answers);
@@ -120,7 +121,7 @@ router.get("/users/:id", (req, res) => {
 
 // Get Answers by question id
 router.get("/questions/:id", (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   Answers.findByQuestionId(req.params.id)
     .then(answers => {
       res.status(200).json(answers);
@@ -129,7 +130,5 @@ router.get("/questions/:id", (req, res) => {
       res.status(500).json({ error: "The answers could not be retrieved." });
     });
 });
-
-
 
 module.exports = router;
